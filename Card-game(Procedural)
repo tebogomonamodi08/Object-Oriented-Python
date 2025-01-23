@@ -13,11 +13,13 @@ card_numbers = 8
 #TODO: function do shuffle the cards
 def shuffle_cards(cards):
     new_deck = cards.copy()
-    return random.shuffle(new_deck)
+    random.shuffle(new_deck)
+    return new_deck
+
 
 def draw_card(cards):
-    drawn_card = cards.pop()
-    return drawn_card
+    return cards.pop()
+
 
 
 #main  function
@@ -35,7 +37,7 @@ shuffled_cards = shuffle_cards(card_pack)
 #current_card:draw a card from shuffle(draw())
 current_card = draw_card(shuffled_cards)
 #loop(play mulliple times)
-while card_numbers>8:
+while card_numbers>0:
 #current_value = current_card['value']
     current_value = current_card['val']
 #current_suit = current_card['suit']
@@ -50,11 +52,11 @@ while card_numbers>8:
 #next_card = draw()
     next_card = draw_card(shuffle_cards)
 #next_value = next_card['value']
-    next_value = next_card['value']
+    next_value = next_card['val']
 #next_suit = next_card['suit']
     next_suit = next_card['suit']
 #next_ranking = current_card['ranking']
-    next_rank = current_card['ranking']
+    next_rank = current_card['rank']
 #if user_input == l:
     if user_input.lower()=='l':
         if current_value>next_value:
@@ -75,7 +77,7 @@ while card_numbers>8:
     else:
         break
 
-    card_numbers - 1
+    card_numbers -= 1
     print(f'You have {card_numbers} tries left and {points} point.')
     current_card = next_card
 
