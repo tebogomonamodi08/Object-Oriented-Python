@@ -1,1 +1,91 @@
+#card game
+#import random
+import random
+#Initialize variables
+#intialize tuple of ranking
+card_ranking = ('Ace','1','2','3','4','5','6','7','8','9','10','Jack','Queen','King')
+#initialize tuple of suite
+card_suits = ('Spade','Hearts','Glover','Dice')
+#intialize number of cards
+card_numbers = 8
+#TODO: function to draw the to part.
+
+#TODO: function do shuffle the cards
+def shuffle_cards(cards):
+    new_deck = cards.copy()
+    return random.shuffle(new_deck)
+
+def draw_card(cards):
+    drawn_card = cards.pop()
+    return drawn_card
+
+
+#main  function
+#initialize Points
+points = 50
+#initialize the empty pack to hold shuffled card
+card_pack = []
+#create the list of dictionaries holding the pack of cards
+for suit in card_suits:
+    for value,ranking in enumerate(card_ranking):
+        card_dict = {'suit':suit, 'rank':ranking, 'val':value+1}
+        card_pack.append(card_dict)
+#call the shuffle fuctiction
+shuffled_cards = shuffle_cards(card_pack)
+#current_card:draw a card from shuffle(draw())
+current_card = draw_card(shuffled_cards)
+#loop(play mulliple times)
+while card_numbers>8:
+#current_value = current_card['value']
+    current_value = current_card['val']
+#current_suit = current_card['suit']
+    current_suit = current_card['suit']
+#current_ranking = current_card['ranking']
+    current_rank= current_card['rank']
+
+#prompt this is current_card['value'], current_card['suit'],current_card['ranking']
+    print(f'The card drawn is {current_value} of {current_rank} {current_suit}')
+#user input = l/h
+    user_input = input('Enter l for lower, h hor higher, q to quit.')
+#next_card = draw()
+    next_card = draw_card(shuffle_cards)
+#next_value = next_card['value']
+    next_value = next_card['value']
+#next_suit = next_card['suit']
+    next_suit = next_card['suit']
+#next_ranking = current_card['ranking']
+    next_rank = current_card['ranking']
+#if user_input == l:
+    if user_input.lower()=='l':
+        if current_value>next_value:
+            print('congratulations, you are 20 points richer.')
+            points += 20
+ #if current_value>next_value: Points + 20
+        else:
+            print('Next time my friend, we are deducting 15 points')
+            points -= 15
+
+    elif user_input.lower()=='h':
+        if current_value<next_value:
+            print('congratulations, you are 20 points richer.')
+            points += 20
+        else:
+            print('Next time my friend, we are deducting 15 points')
+            points -= 15
+    else:
+        break
+
+    card_numbers - 1
+    print(f'You have {card_numbers} tries left and {points} point.')
+    current_card = next_card
+
+#elif user_input == h:
+ #if current_value<next_value: Points +20
+ #else: Points -15
+#Ncard - 1
+#prompt Ncard, Points.
+#current_card = next_card
+
+
+
 
