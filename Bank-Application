@@ -1,0 +1,37 @@
+#We are creating a simple bank account program.
+#It will represent a single user
+#Initialize the global varible, customer_name, customer_password, balance.
+customer_name = ''
+customer_password=''
+account_balance = ''
+re_enter_password = ''
+#prompt the operations and options available.
+print('Welcome to the lake national bank, we have options you can select from:')
+print('To create an account select c\nTo quit press q')
+while True:
+    user_input = input('Enter option: ')
+    if user_input.lower()=='c':
+        customer_name = input('Enter you full name')
+        customer_password = input('Enter a new password')
+        re_enter_password = input('Re-enter password')
+        while customer_password!=re_enter_password:
+            print('Passwords donnot match.')
+            customer_password = input('Enter a new password')
+            re_enter_password = input('Re-enter password')
+        amount = int(input('Enter starting balance'))
+        if account_balance<=0:
+            print('Invalid Amount entered')
+        else:
+            account_balance += amount
+            print('%s succesfully deposited, new amount is: %s '%amount %account_balance)
+    else:
+        print('Thank you for using our services, Goodbye.')
+        break
+
+        
+
+    
+#get user input
+#ask for password:
+#if passowrd is correct: execute user_input
+#else: Prompt error
