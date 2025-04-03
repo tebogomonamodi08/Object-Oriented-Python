@@ -21,7 +21,7 @@ class Books:
         self.author = author
         self.availability = availability
 
-    def borrow(self):
+    def borrowed(self):
         self.availability = False
 
 class Users:
@@ -39,10 +39,10 @@ class Admins(Users):
     
     def add_book(self, library, book):
         '''This method add a books intance to a librabries intance list attribute'''
-        library.collections.append(book)
+        library.collection.append(book)
     
     def view_books(self, library):
-        for item in library.collections:
+        for item in library.collection:
             print(item)
 
 
@@ -52,8 +52,10 @@ class Members(Users):
         super().__init__(name, id)
 
     def borrow_book(self, book_title, library):
-        book = library.find(book_title)
-        if library.find(book_title) and book.availability:
+        book = library.find_book(book_title)
+        if book.availability:
             print('Book borrowed')
-            book.availability = False
+            book.borrowed()
+        else:
+            print('Title does not exist or book is not available')
         

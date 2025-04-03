@@ -1,37 +1,105 @@
-#We are creating a simple bank account program.
-#It will represent a single user
-#Initialize the global varible, customer_name, customer_password, balance.
-customer_name = ''
-customer_password=''
-account_balance = ''
-re_enter_password = ''
-#prompt the operations and options available.
-print('Welcome to the lake national bank, we have options you can select from:')
-print('To create an account select c\nTo quit press q')
-while True:
-    user_input = input('Enter option: ')
-    if user_input.lower()=='c':
-        customer_name = input('Enter you full name')
-        customer_password = input('Enter a new password')
-        re_enter_password = input('Re-enter password')
-        while customer_password!=re_enter_password:
-            print('Passwords donnot match.')
-            customer_password = input('Enter a new password')
-            re_enter_password = input('Re-enter password')
-        amount = int(input('Enter starting balance'))
-        if account_balance<=0:
-            print('Invalid Amount entered')
+#import random
+
+#TODO: Bank Class
+
+class Banks:
+    '''This class will be central class in the program, manages customer accounts.
+    Attributes: list of customer objects
+    Behavior: Verify withdrawals, check balanances'''
+    def __init__(self, customers=[]):
+        self.customers = customers
+
+    def widthdraw(self, account_number, amount):
+        for item in self.customers:
+            if item.account_number == account_number:
+                if item.balance>amount:
+                    item.balance -= amount
+                    print('Thrrrrrr money..')
+                else:
+                    print('Insufficient funds.')
+            
+            else:
+                'The customer does not exisit'
+
+    def balance(self, account_number):
+        for account in self.customers:
+            if account.account_number==account_number:
+                return account.balance
+            else:
+                print('Account number does not exist.')
+
+#TODO: Custome Exception class
+class Invalid(Exception):
+    pass  
+
+#TODO:Account Class
+class Accounts:
+
+    '''This class will be able to interact with the bank class to request withdrwals and balances
+    Attributes: account_holder_name, account_number, balance'''
+    def __init__(self, account_holder, account_number, balance):
+        self.account_holder = account_holder
+        self.account_number = account_number
+        self.balance = balance
+
+#TODO:Admin Class
+class Admins(Banks):
+    '''Inherits from the banks class
+    behaviours: Can view accounts and create new accounts'''
+    def __init__(self, customers=[]):
+        super().__init__(customers)
+
+    def create_account(self, account_holder, account_number, balance):
+        while True:
+            try:
+                int(account_number)
+                if account_number!=10:
+                    raise Invalid('The account number must contain 10 digits.')
+                for accounts in self.customers:
+                    if accounts.account_number == account_number:
+                        print('The number already exists')
+                    else:
+                        new_customer = Customers(account_holder, account_number, balance)
+                        self.customers.append(new_customer)
+                        print('The Account has been succesfully created.')
+                        return
+            except ValueError:
+                print('The number is not numeric please try again')
+
+    def view_accounts(self):
+        for account in self.customers:
+            print('Account HOlder: ',account.account_holder)
+            print('Account Number: ', account.account_number)
+            print('balance ', account.balance)
+            
+
+
+#TODO:Customer Class
+
+class Customers(Accounts):
+    '''Inherits from the account class
+    behaviours: can withdraw, deposit and view their balance'''
+    def __init__(self, account_holder, account_number, balance):
+        super().__init__(account_holder,account_number,balance)
+
+    def deposit(self, amount, bank):
+        try:
+            int(amount)
+            for account in bank.customers:
+                if account.account_number == self.account_number:
+                    account.balance+=amount
+                    print(f'{amount} has been deposited for {self.account_number}')
+                    print(f'You new balance is {account.balance}')
+        except TypeError:
+            print('Invalid Amount.')
+
+    def widthdraw(self, bank, amount):
+        if amount<=0:
+            print('Invalid Amount!!!')
         else:
-            account_balance += amount
-            print('%s succesfully deposited, new amount is: %s '%amount %account_balance)
-    else:
-        print('Thank you for using our services, Goodbye.')
-        break
+            bank.widthdraw(self.account_number, amount)
+            print(f'{amount} has been withdrawn from Customer {self.account_number}')
+            print(f'Your new balance is {bank.balance(self.account_number)}')
 
         
 
-    
-#get user input
-#ask for password:
-#if passowrd is correct: execute user_input
-#else: Prompt error
